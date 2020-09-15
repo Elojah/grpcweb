@@ -1,8 +1,8 @@
 package grpcweb
 
-import "github.com/elojah/game_02/pkg/errors"
+import "github.com/elojah/services"
 
-// Config is redis structure config.
+// Config is grpcweb structure config.
 type Config struct {
 	Cert string `json:"cert"`
 	Key  string `json:"key"`
@@ -18,16 +18,16 @@ type Config struct {
 func (c *Config) Dial(fileconf interface{}) error {
 	fconf, ok := fileconf.(map[string]interface{})
 	if !ok {
-		return errors.ErrEmptyNamespace{}
+		return services.ErrEmptyNamespace{}
 	}
 
 	cCert, ok := fconf["cert"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "cert"}
+		return services.ErrMissingKey{Key: "cert"}
 	}
 
 	if c.Cert, ok = cCert.(string); !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "cert",
 			Expect: "string",
 			Value:  cCert,
@@ -36,11 +36,11 @@ func (c *Config) Dial(fileconf interface{}) error {
 
 	cKey, ok := fconf["key"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "key"}
+		return services.ErrMissingKey{Key: "key"}
 	}
 
 	if c.Key, ok = cKey.(string); !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "key",
 			Expect: "string",
 			Value:  cKey,
@@ -49,12 +49,12 @@ func (c *Config) Dial(fileconf interface{}) error {
 
 	cConnectionTimeout, ok := fconf["connection_timeout"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "connection_timeout"}
+		return services.ErrMissingKey{Key: "connection_timeout"}
 	}
 
 	f, ok := cConnectionTimeout.(float64)
 	if !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "connection_timeout",
 			Expect: "number",
 			Value:  cConnectionTimeout,
@@ -64,12 +64,12 @@ func (c *Config) Dial(fileconf interface{}) error {
 
 	cNumStreamWorkers, ok := fconf["num_stream_workers"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "num_stream_workers"}
+		return services.ErrMissingKey{Key: "num_stream_workers"}
 	}
 
 	f, ok = cNumStreamWorkers.(float64)
 	if !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "num_stream_workers",
 			Expect: "number",
 			Value:  cNumStreamWorkers,
@@ -79,12 +79,12 @@ func (c *Config) Dial(fileconf interface{}) error {
 
 	cMaxMsgSize, ok := fconf["max_msg_size"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "max_msg_size"}
+		return services.ErrMissingKey{Key: "max_msg_size"}
 	}
 
 	f, ok = cMaxMsgSize.(float64)
 	if !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "max_msg_size",
 			Expect: "number",
 			Value:  cMaxMsgSize,
@@ -94,12 +94,12 @@ func (c *Config) Dial(fileconf interface{}) error {
 
 	cOrigin, ok := fconf["max_msg_size"]
 	if !ok {
-		return errors.ErrMissingKey{Key: "max_msg_size"}
+		return services.ErrMissingKey{Key: "max_msg_size"}
 	}
 
 	m, ok := cOrigin.(map[string]struct{})
 	if !ok {
-		return errors.ErrInvalidType{
+		return services.ErrInvalidType{
 			Key:    "max_msg_size",
 			Expect: "map[string]struct{}",
 			Value:  cOrigin,
