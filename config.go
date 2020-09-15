@@ -9,7 +9,7 @@ type Config struct {
 
 	ConnectionTimeout uint `json:"connection_timeout"`
 	NumStreamWorkers  uint `json:"num_stream_workers"`
-	MaxMsgSize        uint `json:"max_msg_size"`
+	MaxRecvMsgSize    uint `json:"max_recv_msg_size"`
 
 	Origin map[string]struct{} `json:"origin"`
 }
@@ -77,30 +77,30 @@ func (c *Config) Dial(fileconf interface{}) error {
 	}
 	c.NumStreamWorkers = uint(f)
 
-	cMaxMsgSize, ok := fconf["max_msg_size"]
+	cMaxMsgSize, ok := fconf["max_recv_msg_size"]
 	if !ok {
-		return services.ErrMissingKey{Key: "max_msg_size"}
+		return services.ErrMissingKey{Key: "max_recv_msg_size"}
 	}
 
 	f, ok = cMaxMsgSize.(float64)
 	if !ok {
 		return services.ErrInvalidType{
-			Key:    "max_msg_size",
+			Key:    "max_recv_msg_size",
 			Expect: "number",
 			Value:  cMaxMsgSize,
 		}
 	}
-	c.MaxMsgSize = uint(f)
+	c.MaxRecvMsgSize = uint(f)
 
-	cOrigin, ok := fconf["max_msg_size"]
+	cOrigin, ok := fconf["max_recv_msg_size"]
 	if !ok {
-		return services.ErrMissingKey{Key: "max_msg_size"}
+		return services.ErrMissingKey{Key: "max_recv_msg_size"}
 	}
 
 	m, ok := cOrigin.(map[string]struct{})
 	if !ok {
 		return services.ErrInvalidType{
-			Key:    "max_msg_size",
+			Key:    "max_recv_msg_size",
 			Expect: "map[string]struct{}",
 			Value:  cOrigin,
 		}

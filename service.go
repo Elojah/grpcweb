@@ -29,7 +29,7 @@ func (s *Service) Dial(cfg Config) error {
 		grpc.Creds(credentials.NewServerTLSFromCert(&cert)),
 		grpc.ConnectionTimeout(time.Duration(cfg.ConnectionTimeout)*time.Second),
 		grpc.NumStreamWorkers(uint32(cfg.NumStreamWorkers)),
-		grpc.MaxMsgSize(int(cfg.MaxMsgSize)),
+		grpc.MaxRecvMsgSize(int(cfg.MaxRecvMsgSize)),
 	)
 
 	s.WrappedGrpcServer = grpcweb.WrapServer(s.Server,
