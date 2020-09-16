@@ -77,17 +77,17 @@ func (c *Config) Dial(fileconf interface{}) error {
 	}
 	c.NumStreamWorkers = uint(f)
 
-	cMaxMsgSize, ok := fconf["max_recv_msg_size"]
+	cMaxRecvMsgSize, ok := fconf["max_recv_msg_size"]
 	if !ok {
 		return services.ErrMissingKey{Key: "max_recv_msg_size"}
 	}
 
-	f, ok = cMaxMsgSize.(float64)
+	f, ok = cMaxRecvMsgSize.(float64)
 	if !ok {
 		return services.ErrInvalidType{
 			Key:    "max_recv_msg_size",
 			Expect: "number",
-			Value:  cMaxMsgSize,
+			Value:  cMaxRecvMsgSize,
 		}
 	}
 	c.MaxRecvMsgSize = uint(f)
