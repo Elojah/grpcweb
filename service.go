@@ -34,7 +34,7 @@ func (s *Service) Dial(cfg Config) error {
 
 	s.WrappedGrpcServer = grpcweb.WrapServer(s.Server,
 		grpcweb.WithOriginFunc(func(origin string) bool {
-			if _, ok := cfg.Origin[origin]; !ok {
+			if valid, ok := cfg.Origin[origin]; !ok || !valid {
 				return false
 			}
 			return true

@@ -11,7 +11,7 @@ type Config struct {
 	NumStreamWorkers  uint `json:"num_stream_workers"`
 	MaxRecvMsgSize    uint `json:"max_recv_msg_size"`
 
-	Origin map[string]struct{} `json:"origin"`
+	Origin map[string]bool `json:"origin"`
 }
 
 // Dial set the config from a config namespace.
@@ -97,11 +97,11 @@ func (c *Config) Dial(fileconf interface{}) error {
 		return services.ErrMissingKey{Key: "origin"}
 	}
 
-	m, ok := cOrigin.(map[string]struct{})
+	m, ok := cOrigin.(map[string]bool)
 	if !ok {
 		return services.ErrInvalidType{
 			Key:    "origin",
-			Expect: "map[string]struct{}",
+			Expect: "map[string]bool",
 			Value:  cOrigin,
 		}
 	}
