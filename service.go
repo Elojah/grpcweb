@@ -2,7 +2,6 @@ package grpcweb
 
 import (
 	"crypto/tls"
-	"fmt"
 	"time"
 
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
@@ -35,7 +34,6 @@ func (s *Service) Dial(cfg Config) error {
 
 	s.WrappedGrpcServer = grpcweb.WrapServer(s.Server,
 		grpcweb.WithOriginFunc(func(origin string) bool {
-			fmt.Println(origin)
 			if _, ok := cfg.Origin[origin]; !ok {
 				return false
 			}
