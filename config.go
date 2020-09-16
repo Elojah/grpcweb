@@ -92,15 +92,15 @@ func (c *Config) Dial(fileconf interface{}) error {
 	}
 	c.MaxRecvMsgSize = uint(f)
 
-	cOrigin, ok := fconf["max_recv_msg_size"]
+	cOrigin, ok := fconf["origin"]
 	if !ok {
-		return services.ErrMissingKey{Key: "max_recv_msg_size"}
+		return services.ErrMissingKey{Key: "origin"}
 	}
 
 	m, ok := cOrigin.(map[string]struct{})
 	if !ok {
 		return services.ErrInvalidType{
-			Key:    "max_recv_msg_size",
+			Key:    "origin",
 			Expect: "map[string]struct{}",
 			Value:  cOrigin,
 		}
